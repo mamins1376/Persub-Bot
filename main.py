@@ -56,7 +56,7 @@ class PersubBot:
     if sub_link is None:
       return
 
-    url = subtigle.get_subtitle_download_link(sub_link)
+    url = subtitle.get_subtitle_download_link(sub_link)
     logging.debug('subtitle download link is: {}'.format(url))
 
     directory = str(uuid.uuid4()) + '.temp'
