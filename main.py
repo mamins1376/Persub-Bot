@@ -9,16 +9,14 @@ import urllib.request
 import subtitle
 import telegram
 import logging
+import sys
+import getopt
 
 
 class PersubBot:
 
   def __init__(self):
     self.LAST_UPDATE_ID = None
-
-    logging.basicConfig(
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        filename='messages.log')
 
     self.token = self.get_token()
     self.bot = telegram.Bot(token=self.token)
@@ -102,5 +100,26 @@ class PersubBot:
     return srt_path
 
 if __name__ == '__main__':
+  argv = sys.argv[1:]
+  LOG_FILE = 'messages.log'
+  LOG_LEVEL = 'warning'
+
+  opts, args = getopt.getopt(
+    argv, 'f:hl:', ['log-file=', 'help', 'log-level='])
+
+  for opt, arg in opts:
+    if opt == '-h':
+      print('main.py -f <LOG_FILE> -l <LOG_LEVEL>')
+      sys.exit()
+    elif opt in ("-f", "--log-file"):
+      LOG_FILE = arg
+    elif opt in ("-l", "--log-level"):
+      LOG_LEVEL = arg
+
+  logging.basicConfig(
+      format='%(asctime)s\t%(name)s\t%(levelname)s\t%(message)s',
+      filename=LOG_FILE,
+      level=LOG_LEVEL.upper())
+
   logging.debug('starting')
   PersubBot()
