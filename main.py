@@ -17,20 +17,20 @@ class PersubBot:
     self.LAST_UPDATE_ID = None
 
     logging.basicConfig(
-        format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        filename = 'messages.log',
-        level = logging.DEBUG)
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        filename='messages.log')
 
     self.token = self.get_token()
-    self.bot = telegram.Bot(token = self.token)
+    self.bot = telegram.Bot(token=self.token)
 
     try:
       self.LAST_UPDATE_ID = self.bot.getUpdates()[-1].update_id
     except IndexError:
       self.LAST_UPDATE_ID = None
+    logging.debug('last update_id: {}'.format(self.LAST_UPDATE_ID))
 
     while True:
-      updates = self.bot.getUpdates(offset = self.LAST_UPDATE_ID, timeout = 10)
+      updates = self.bot.getUpdates(offset=self.LAST_UPDATE_ID, timeout=10)
       for update in updates:
         chat_id = update.message.chat_id
         message = update.message.text
@@ -38,6 +38,7 @@ class PersubBot:
         self.LAST_UPDATE_ID = update.update_id + 1
 
   def get_token(self):
+    logging.debug('Getting bot token from token.txt')
     token_file = open('token.txt')
     token = token_file.read().split('\n')[0]
     token_file.close()
@@ -58,9 +59,11 @@ class PersubBot:
       return
 
     url = subtitle_api.get_subtitle_download_link(sub_link)
+    logging.debug('subtitle download link is: {}'.format(url))
 
     directory = str(uuid.uuid4()) + '.temp'
     os.mkdir(directory)
+    logging.debug('{} directory created.'.format(directory))
 
     zipped_subtitle_path = directory + '/subtitle.zip'
 
@@ -80,17 +83,24 @@ class PersubBot:
     data = urllib.request.urlopen(url).read()
     zipped_subtitle.write(data)
     zipped_subtitle.close()
+    logging.debug('download completed')
 
   def unzip(self, zipped, directory):
     zipfile.ZipFile(zipped).extractall(directory)
+    logging.debug('archive unzipped')
 
   def find_srt(self, directory):
     files = os.listdir(directory)
+    srt_path = None
     for file in files:
       if file.endswith('.srt'):
         srt_path = directory + '/' + file
+        logging.debug('subtitle found: {}'.format(srt_path))
         break
+    if srt_path is None:
+      logging.warning('no subtitle found in {} directory'.format(directory))
     return srt_path
 
 if __name__ == '__main__':
+  logging.debug('starting')
   PersubBot()
