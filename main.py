@@ -6,7 +6,7 @@ import os
 import shutil
 import uuid
 import urllib.request
-import subtitle_api
+import subtitle
 import telegram
 import logging
 
@@ -46,10 +46,10 @@ class PersubBot:
 
   def send_subtitle(self, chat_id, title):
     try:
-      url = subtitle_api.get_film_url(title)
+      url = subtitle.get_film_url(title)
     except ValueError:
       return
-    subtitles = subtitle_api.get_subtitles(url)
+    subtitles = subtitle.get_subtitles(url)
     sub_link = None
     for sub in subtitles:
       if 'Persian' in sub['language']:
@@ -58,7 +58,7 @@ class PersubBot:
     if sub_link is None:
       return
 
-    url = subtitle_api.get_subtitle_download_link(sub_link)
+    url = subtigle.get_subtitle_download_link(sub_link)
     logging.debug('subtitle download link is: {}'.format(url))
 
     directory = str(uuid.uuid4()) + '.temp'
