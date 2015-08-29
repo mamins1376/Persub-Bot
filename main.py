@@ -4,14 +4,16 @@
 import zipfile
 import os
 import shutil
-import uuid
-import urllib.request
-import subtitle
-import telegram
-import logging
 import sys
+import uuid
+import logging
 import getopt
+import urllib.request
+import telegram
 
+subscene_dir = os.path.abspath('lib/subscene-api')
+sys.path.append(subscene_dir)
+from subscene import Subscene
 
 class PersubBot:
 
@@ -42,22 +44,33 @@ class PersubBot:
     token_file.close()
     return token
 
-  def send_subtitle(self, chat_id, title):
+  def send_subtitle(self, chat_id, term):
+    logging.debug('searching for: {}'.format(term))
+
     try:
-      url = subtitle.get_film_url(title)
-    except ValueError:
-      return
-    subtitles = subtitle.get_subtitles(url)
-    sub_link = None
-    for sub in subtitles:
-      if 'Persian' in sub['language']:
-        sub_link = sub['url']
-        break
-    if sub_link is None:
+      film = Subscene().Search(term)
+    except Exception as error:
+      logging.error('error while searching: {}'.format(error))
+      self.bot.sendMessage(chat_id, 'فیلم پیدا نشد.')
       return
 
-    url = subtitle.get_subtitle_download_link(sub_link)
-    logging.debug('subtitle download link is: {}'.format(url))
+    if film is None:
+        self.bot.sendMessage(chat_id, 'فیلم پیدا نشد.')
+        return
+
+    subtitle_link = ''
+    for subtitle in film.subtitles:
+      if 'Persian' in subtitle.language:
+        subtitle.getZipLink()
+        subtitle_link = subtitle.zipped
+        break
+
+    if subtitle_link is '':
+      logging.debug('no Persian subtitle found for {}'.format(term))
+      self.bot.sendMessage(chat_id, 'این فیلم زیرنویس پارسی ندارد.')
+      return
+
+    logging.debug('subtitle download link is: {}'.format(subtitle_link))
 
     directory = str(uuid.uuid4()) + '.temp'
     os.mkdir(directory)
@@ -65,7 +78,7 @@ class PersubBot:
 
     zipped_subtitle_path = directory + '/subtitle.zip'
 
-    self.download(url, zipped_subtitle_path)
+    self.download(subtitle_link, zipped_subtitle_path)
 
     self.unzip(zipped_subtitle_path, directory)
 
@@ -78,10 +91,11 @@ class PersubBot:
 
   def download(self, url, filename):
     zipped_subtitle = open(filename, 'wb')
+    logging.debug('downloading: {}'.format(url))
     data = urllib.request.urlopen(url).read()
     zipped_subtitle.write(data)
     zipped_subtitle.close()
-    logging.debug('download completed')
+    logging.debug('download completed: {}'.format(filename))
 
   def unzip(self, zipped, directory):
     zipfile.ZipFile(zipped).extractall(directory)

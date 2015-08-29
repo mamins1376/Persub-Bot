@@ -1,0 +1,3 @@
+[submodule "lib/subscene-api"]
+	path = lib/subscene-api
+	url = https://github.com/mamins1376/Subscene-API.git
