@@ -79,7 +79,7 @@ class PersubBot:
 
     # if no suitable subtitle found, give up
     if subtitle_link is '':
-      logging.debug('no Persian subtitle found for {}'.format(term))
+      logging.debug('no Persian subtitle found for {}'.format(message))
       self.bot.sendMessage(chat_id, 'این فیلم زیرنویس پارسی ندارد.')
     else:
       self.send_subtitle(chat_id, subtitle_link)
