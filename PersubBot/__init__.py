@@ -5,11 +5,15 @@ import telegram
 
 import PersubBot.Commands.Start
 import PersubBot.Commands.Sub
+import PersubBot.Commands.Help
+import PersubBot.Commands.About
 #import PersubBot.Commands.Talk
 
 COMMANDS_LOOKUP = {
   'START': PersubBot.Commands.Start,
   'SUB': PersubBot.Commands.Sub,
+  'HELP': PersubBot.Commands.Help,
+  'ABOUT': PersubBot.Commands.About,
 #  'TALK': PersubBot.Commands.Talk
 }
 
@@ -106,3 +110,4 @@ class PersubBot:
 
   def reply_location(self, message):
     logging.debug('Replying to a location')
+

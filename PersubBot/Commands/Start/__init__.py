@@ -10,4 +10,5 @@ class Command:
 
     bot.sendMessage(chat_id, 'Hi!')
     bot.sendMessage(chat_id, 'this bot is under heavy development right now.')
+    bot.sendMessage(chat_id, 'to get a list of commands, use /help.')
     bot.sendMessage(chat_id, 'see you soon :D')
