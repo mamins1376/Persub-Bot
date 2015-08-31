@@ -6,9 +6,9 @@ import PersubBot.DataBase
 class Command:
 
   LANGUAGES_LOOKUP = {
-      'persian': 'fa', 'farsi': 'fa', 'فارسی': 'fa',
-      'arabic': 'ar', 'عربی': 'ar', 'عربي': 'ar',
-      'english': 'en',
+      'persian': 'Persian', 'farsi': 'Persian', 'فارسی': 'Persian',
+      'arabic': 'Arabic', 'عربی': 'Arabic', 'عربي': 'Arabic',
+      'english': 'English',
   }
 
   def __init__(self, bot, message):
