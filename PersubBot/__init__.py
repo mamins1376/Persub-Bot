@@ -84,7 +84,7 @@ class PersubBot:
     try:
       result = COMMANDS_LOOKUP[command].Command(self.bot, message)
     except KeyError:
-      bot.sendMessage(message.chat_id, 'Unknown command. see /help')
+      self.bot.sendMessage(message.chat_id, 'Unknown command. see /help')
       logging.info('Undefined command called: {}'.format(command))
 
   def reply_audio(self, message):
