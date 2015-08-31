@@ -9,6 +9,7 @@ import urllib.request
 import telegram
 
 from subscene import Subscene
+import PersubBot.DataBase as DataBase
 
 
 class Command:
@@ -17,6 +18,7 @@ class Command:
     self.bot = bot
     text = message.text
     chat_id = message.chat_id
+    user_id = message.from_user.id
 
     if text == '':
       self.bot.sendMessage(chat_id, telegram.Emoji.NEUTRAL_FACE)
@@ -43,10 +45,21 @@ class Command:
     # if film.cover != '':
     #  self.send_film_cover(chat_id, film.cover)
 
+    # get user language
+    language = DataBase.get_user_language(user_id)
+
+    if language == '':
+      bot.sendMessage(chat_id, 'Please set your language first: /language')
+      return
+
+    if language is None:
+      bot.sendMessage(chat_id, 'There was an error. come back later.')
+      return
+
     # choose a subtitle
     subtitle_link = ''
     for subtitle in film.subtitles:
-      if 'Persian' in subtitle.language:
+      if language in subtitle.language:
         subtitle.getZipLink()
         subtitle_link = subtitle.zipped
         break
