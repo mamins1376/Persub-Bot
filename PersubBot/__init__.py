@@ -15,7 +15,7 @@ COMMANDS_LOOKUP = {
   'SUB': PersubBot.Commands.Sub,
   'HELP': PersubBot.Commands.Help,
   'ABOUT': PersubBot.Commands.About,
-  'LANGUAGE': PersubBot.Commands.Language,
+  'LANG': PersubBot.Commands.Language,
   'TALK': PersubBot.Commands.Talk
 }
 
@@ -84,6 +84,7 @@ class PersubBot:
     try:
       result = COMMANDS_LOOKUP[command].Command(self.bot, message)
     except KeyError:
+      bot.sendMessage(message.chat_id, 'Unknown command. see /help')
       logging.info('Undefined command called: {}'.format(command))
 
   def reply_audio(self, message):

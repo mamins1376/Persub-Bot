@@ -49,7 +49,7 @@ class Command:
     language = DataBase.get_user_language(user_id)
 
     if language == '':
-      bot.sendMessage(chat_id, 'Please set your language first: /language')
+      bot.sendMessage(chat_id, 'Please set your language first: /lang')
       return
 
     if language is None:
