@@ -7,6 +7,7 @@ import PersubBot.Commands.Start
 import PersubBot.Commands.Sub
 import PersubBot.Commands.Help
 import PersubBot.Commands.About
+import PersubBot.Commands.Language
 import PersubBot.Commands.Talk
 
 COMMANDS_LOOKUP = {
@@ -14,6 +15,7 @@ COMMANDS_LOOKUP = {
   'SUB': PersubBot.Commands.Sub,
   'HELP': PersubBot.Commands.Help,
   'ABOUT': PersubBot.Commands.About,
+  'LANGUAGE': PersubBot.Commands.Language,
   'TALK': PersubBot.Commands.Talk
 }
 
