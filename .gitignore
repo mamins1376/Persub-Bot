@@ -1,7 +1,7 @@
 token.txt
 *.temp
 .fuse*
-.db
+*.db
 *.log.*
 
 
