@@ -17,15 +17,15 @@ echo '<YOUR TOKEN>' > token.txt
 
 mark main.py as executable:
 ```
-chmod +x main.py
+chmod +x launcher.py
 ```
 
 and finally run it:
 ```
-./main.py
+./launcher.py
 ```
 
 to see available options, see:
 ```
-./main.py --help
+./launcher.py --help
 ```
