@@ -17,7 +17,7 @@ class Command:
     user_id = message.from_user.id
 
     if text == '':
-      bot.sendMessage(chat_id, 'Usage: /language <YOUR LANGUAGE>')
+      bot.sendMessage(chat_id, 'Usage: /lang <YOUR LANGUAGE>')
       return
 
     language = ''
