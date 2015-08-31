@@ -1,6 +1,9 @@
 token.txt
 *.temp
 .fuse*
+.db
+*.log.*
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
