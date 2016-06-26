@@ -4,6 +4,9 @@ token.txt
 *.db
 *.log.*
 
+# VirtualEnv
+include/
+bin/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

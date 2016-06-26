@@ -6,9 +6,7 @@ import os
 import logging
 import getopt
 
-sys.path.append(os.path.abspath('lib'))
-
-from PersubBot import PersubBot
+from persubbot import PersubBot
 
 
 def get_token(token_path):
@@ -84,8 +82,7 @@ Persub Bot Launcher Script
       logging.info('exiting (KeyboardInterrupt)')
       break
     except Exception as error:
-      error_type = str(type(error)).split('\'')[-2]
-      logging.error('{}: {}'.format(error_type,error))
+      logging.exception('launcher level exception')
 
     if not LOOP_MODE:
       break

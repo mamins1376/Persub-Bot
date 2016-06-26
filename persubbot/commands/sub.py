@@ -9,7 +9,7 @@ import urllib.request
 import telegram
 
 from subscene import Subscene
-import PersubBot.DataBase as DataBase
+import persubbot.database as DataBase
 
 
 class Command:
@@ -24,13 +24,15 @@ class Command:
       self.bot.sendMessage(chat_id, telegram.Emoji.NEUTRAL_FACE)
       return
 
+    self.bot.sendMessage(chat_id, "Searching for '{}'...".format(text))
+
     logging.debug('searching for: {}'.format(text))
     # 'Typing...'
     self.bot.sendChatAction(chat_id, telegram.ChatAction.TYPING)
 
     # find the film
     try:
-      film = Subscene().Search(text)
+      film = Subscene().search(text)
     except Exception as error:
       logging.error('error while searching: {}'.format(error))
       self.bot.sendMessage(chat_id, 'فیلم پیدا نشد.')
@@ -60,8 +62,7 @@ class Command:
     subtitle_link = ''
     for subtitle in film.subtitles:
       if language in subtitle.language:
-        subtitle.getZipLink()
-        subtitle_link = subtitle.zipped
+        subtitle_link = subtitle.get_zip_link()
         break
 
     # if no suitable subtitle found, give up
@@ -139,3 +140,4 @@ class Command:
       logging.warning('no subtitle found in {} directory'.format(directory))
 
     return srt_path
+

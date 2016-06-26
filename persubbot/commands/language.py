@@ -1,7 +1,7 @@
 #! coding: utf-8
 
-import PersubBot
-import PersubBot.DataBase
+import persubbot
+import persubbot.database
 
 class Command:
 
@@ -21,18 +21,17 @@ class Command:
       return
 
     language = ''
-    table = PersubBot.Commands.Language.Command.LANGUAGES_LOOKUP
 
-    for lang in table:
+    for lang in self.LANGUAGES_LOOKUP.keys():
       if lang in text.lower():
-        language = table[lang]
+        language = self.LANGUAGES_LOOKUP[lang]
 
     if language == '':
       bot.sendMessage(
         chat_id, 'I can\'t find {} subtitles. sorry'.format(text))
       return
 
-    PersubBot.DataBase.set_user_language(user_id, language)
+    persubbot.database.set_user_language(user_id, language)
 
     bot.sendMessage(
         chat_id, 'I\'ll give you subtitles in {} from now.'.format(text))

@@ -1,0 +1,4 @@
+beautifulsoup4==4.4.1
+future==0.15.2
+python-telegram-bot==4.2.1
+subscene-api==1.0.0

@@ -3,20 +3,20 @@
 import logging
 import telegram
 
-import PersubBot.Commands.Start
-import PersubBot.Commands.Sub
-import PersubBot.Commands.Help
-import PersubBot.Commands.About
-import PersubBot.Commands.Language
-import PersubBot.Commands.Talk
+import persubbot.commands.start
+import persubbot.commands.sub
+import persubbot.commands.helpp # 'help' is a built-in function
+import persubbot.commands.about
+import persubbot.commands.language
+import persubbot.commands.talk
 
 COMMANDS_LOOKUP = {
-  'START': PersubBot.Commands.Start,
-  'SUB': PersubBot.Commands.Sub,
-  'HELP': PersubBot.Commands.Help,
-  'ABOUT': PersubBot.Commands.About,
-  'LANG': PersubBot.Commands.Language,
-  'TALK': PersubBot.Commands.Talk
+  'START': persubbot.commands.start,
+  'SUB': persubbot.commands.sub,
+  'HELP': persubbot.commands.helpp,
+  'ABOUT': persubbot.commands.about,
+  'LANG': persubbot.commands.language,
+  'TALK': persubbot.commands.talk
 }
 
 class PersubBot:
